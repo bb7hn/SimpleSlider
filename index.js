@@ -14,6 +14,7 @@ class simpleSlider {
         this.dragStartX = 0;
         this.touches = [];
         this.resizeTimeout = null;
+        this.slides = [];
     }
     
     init(opts) {
@@ -56,10 +57,11 @@ class simpleSlider {
         this.root.addEventListener('touchleave', this.touchLeaveHandler);
         this.root.addEventListener('touchcancel', this.touchCancelHandler);
 
-        /* window.addEventListener('resize', (e) => {
+        window.addEventListener('resize', (e) => {
+            this.root.style.opacity = 0.1;
             clearTimeout(this.resizeTimeout);
-            this.resizeTimeout = setTimeout(()=>this.resizeHandler(e,this.root), 100);      
-        }); */
+            this.resizeTimeout = setTimeout(()=>{this.setActiveSlide(0); this.root.style.opacity = 1;}, 80);      
+        });
 
         this.root.simpleSlider = this;
         return this;
@@ -72,6 +74,7 @@ class simpleSlider {
     }
 
     createImages(urlList) {
+        this.slides.forEach(e=>e.remove());
         urlList.forEach((url, i) => {
             const imgContainer = document.createElement('div');
             imgContainer.style.transition = "all 400ms";
@@ -87,6 +90,7 @@ class simpleSlider {
             imgContainer.append(img);
             this.root.append(imgContainer);
         });
+        this.slides = Array.from(this.root.querySelectorAll('div:not([data-type="control"])'));
     }
 
     createControls() {
@@ -201,15 +205,18 @@ class simpleSlider {
     }
 
     setActiveSlide(multiplier = 1) {
+        const oldIDX = this.currentSlide;
         const slides = this.root.querySelectorAll('div:not([data-type="control"])');
         const slideWidth = slides[0].getBoundingClientRect().width;
 
         slides.forEach((slide) => {
             slide.style.transform = `translateX(-${slideWidth * (this.currentSlide + multiplier)}px)`;
         });
-
+        
         this.currentSlide += multiplier;
-        this.changedCB(this.currentSlide);
+        if(this.currentSlide !== oldIDX){
+            this.changedCB(this.currentSlide);
+        }
         this.setActiveNavItem();
     }
     on(type, callBack) {
@@ -282,18 +289,10 @@ class simpleSlider {
             simpleSlider.goToSlide('>');
         }
     }
-
-    /* resizeHandler(e,simpleSlider){
-        const newWidth = simpleSlider.getBoundingClientRect().width;
-        console.log(newWidth);
-        const slides = this.root.querySelectorAll('div:not([data-type="control"])');
-        slides.forEach((slide)=>{
-            slide.style.minWidth = `${newWidth}px`
-        });
-    } */
 }
 
-export default new simpleSlider;
+const _simpleSlider = new simpleSlider;
+export { _simpleSlider as simpleSlider };
 
 /* 
     const event = new Event('changed');
