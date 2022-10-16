@@ -25,11 +25,12 @@ class simpleSlider {
         this.touches = [0,0];
         this.resizeTimeout = null;
         this.slides = [];
+        this.changedCB = () => {}
     }
     
     init(opts) {
         // set default options
-        const options = { ...defaultProps, ...opts, controls:{...defaultProps.controls, ...opts.controls }, style:{ ...defaultProps.style, ...opts.style }}
+        const options = { ...defaultProps, ...opts, controls:{...defaultProps.controls, ...opts.controls }, style:{ ...defaultProps.style, ...opts.style, display:'flex', overflow:'hidden' }}
         // Set options of class
         this.setOptions(options);
         // Check did root element set by user
