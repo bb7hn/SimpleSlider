@@ -1,0 +1,25 @@
+{
+  "name": "simpleslider",
+  "version": "0.0.1",
+  "description": "Basic Vanilla JS carousel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bb7hn/SimpleSlider.git"
+  },
+  "keywords": [
+    "carousel",
+    "slider",
+    "simple",
+    "easy"
+  ],
+  "author": "Batuhan OZEN",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bb7hn/SimpleSlider/issues"
+  },
+  "homepage": "https://github.com/bb7hn/SimpleSlider#readme"
+}
