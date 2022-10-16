@@ -1,6 +1,6 @@
 {
-  "name": "bb7hn-simple-slider",
-  "version": "0.0.3",
+  "name": "simpleslider-ssjs",
+  "version": "0.0.1",
   "description": "Basic Vanilla JS carousel",
   "main": "index.js",
   "type": "module",

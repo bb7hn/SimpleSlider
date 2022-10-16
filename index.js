@@ -4,22 +4,32 @@ const defaultProps = {
     imgList: [],
     controls: {
         next: false,
-        prev: false
+        prev: false,
+        navigation: false,
     },
     autoPlay: true,
+    style:{
+        maxWidth:'90vw',
+        boxSizing: 'border-box',
+        maxHeight: '50vw',
+        minHeight: '300px',
+        border: '1px solid gray',
+        borderRadius: '12px',
+    }
+    
 };
 class simpleSlider {
 
     constructor(){
         this.dragStartX = 0;
-        this.touches = [];
+        this.touches = [0,0];
         this.resizeTimeout = null;
         this.slides = [];
     }
     
     init(opts) {
         // set default options
-        const options = { ...defaultProps, ...opts }
+        const options = { ...defaultProps, ...opts, controls:{...defaultProps.controls, ...opts.controls }, style:{ ...defaultProps.style, ...opts.style }}
         // Set options of class
         this.setOptions(options);
         // Check did root element set by user
@@ -35,9 +45,14 @@ class simpleSlider {
         }
         // TODO check item types of array accept only if they are strings or html elements
 
+        //set Styles
+        this.setStyles();
         // if user did not set custom controls create default controls
-        if (options.controls.next === false || options.controls.prev !== false) {
+        if (options.controls.next === false || options.controls.prev === false || options.controls.navigation === false) {
             this.createControls();
+        }
+        else{
+            this.createCustomControls();
         }
 
         this.slideCount = imgList.length;
@@ -56,6 +71,7 @@ class simpleSlider {
         this.root.addEventListener('touchmove', this.touchMoveHandler);
         this.root.addEventListener('touchleave', this.touchLeaveHandler);
         this.root.addEventListener('touchcancel', this.touchCancelHandler);
+
 
         window.addEventListener('resize', (e) => {
             this.root.style.opacity = 0.1;
@@ -160,9 +176,27 @@ class simpleSlider {
             bottomNavigation.appendChild(circle);
         })
 
-        this.bottomNav = bottomNavigation.children;
+        this.navigation = bottomNavigation.children;
 
         this.root.append(previousButton, nextButton, bottomNavigation);
+    }
+
+    createCustomControls() {
+        const { 
+            controls:{
+                    next,
+                    prev,
+                    navigation
+            } 
+        } = this.options;
+        prev.setAttribute('data-type','control');
+        prev.onclick = ()=>this.goToSlide('<');
+
+        next.setAttribute('data-type','control');
+        next.onclick = ()=>this.goToSlide('>');
+
+        navigation.setAttribute('data-type','control');
+        this.root.append(prev, next, navigation);
     }
 
     goToSlide(index, event = "userClick") {
@@ -188,8 +222,7 @@ class simpleSlider {
         }
         else {
             // parseint index and go to index
-            console.log(parseInt(index));
-            this.currentSlide = index;
+            this.currentSlide = parseInt(index);
             this.setActiveSlide(0);
         }
         if (event === "userClick") {
@@ -198,10 +231,12 @@ class simpleSlider {
     }
 
     setActiveNavItem() {
-        Array.from(this.bottomNav).forEach(item => {
-            item.style.background = "#FFFFFF50";
-        });
-        this.bottomNav[this.currentSlide].style.background = "#FFFFFF90";
+        if(this.navigation){
+            Array.from(this.navigation).forEach(item => {
+                item.style.background = "#FFFFFF50";
+            });
+            this.navigation[this.currentSlide].style.background = "#FFFFFF90";
+        }
     }
 
     setActiveSlide(multiplier = 1) {
@@ -219,6 +254,7 @@ class simpleSlider {
         }
         this.setActiveNavItem();
     }
+
     on(type, callBack) {
         this[`${type}CB`] = callBack;
     }
@@ -235,40 +271,6 @@ class simpleSlider {
         }
     }
 
-/*     dragStartHandler(e) {
-        const dragImg = new Image();
-        dragImg.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
-        e.dataTransfer.setDragImage(dragImg, 0, 0);
-        const { screenX } = e;
-        const simpleSlider = this.simpleSlider;
-        simpleSlider.dragStartX = screenX;
-        console.log('dragging',simpleSlider);
-        //console.log('clientX => ', clientX);
-        //console.log('clientY => ', clientY);
-        //console.log('layerX => ', layerX);
-        //console.log('layerY => ', layerY);
-        //console.log('offsetX => ', offsetX);
-        //console.log('offsetY => ', offsetY);
-        //console.log('pageX => ', pageX);
-        //console.log('pageY => ', pageY);
-        //console.log('screenX => ', screenX);
-        //console.log('screenY => ', screenY);
-    }
-    dragEndHandler(e) {
-        const { screenX } = e;
-        e.preventDefault();
-        const simpleSlider = this.simpleSlider;
-        console.log('dragged',simpleSlider);
-        if(screenX > simpleSlider.dragStartX){
-            simpleSlider.goToSlide('<');
-        }
-        else{
-            simpleSlider.goToSlide('>');
-        }
-
-        simpleSlider.dragStartX = 0;
-    } */
-
     touchStartHandler(e) {
         //set x starting location in here
         this.simpleSlider.touches[0] = e.touches[0].screenX;
@@ -277,17 +279,44 @@ class simpleSlider {
         // set x location in here
         this.simpleSlider.touches[1] = e.touches[e.touches.length - 1].screenX;
     }
-    touchEndHandler(e) {
+    touchEndHandler() {
         // handle where to go in here (prev or next)
         const simpleSlider = this.simpleSlider;
         const firstTouch = simpleSlider.touches[0];
         const lastTouch = simpleSlider.touches[1];
+        if(firstTouch === 0 || lastTouch === 0){
+            return;
+        }
+        const diff = Math.abs(lastTouch - firstTouch);
+        if(diff < 50){
+            return;
+        }
         if(lastTouch > firstTouch){
             simpleSlider.goToSlide('<');
         }
         if(lastTouch < firstTouch){
             simpleSlider.goToSlide('>');
         }
+        simpleSlider.resetTouches();
+    }
+
+    resetTouches(){
+        this.touches = [0, 0];
+    }
+
+    setStyles(){
+        const root = this.root;
+        const styles = this.options.style;
+        Object.keys(styles).forEach((key) => {
+            root.style[key] = styles[key];
+        });
+        root.style.position = 'relative';
+        root.style.overflow = 'hidden';
+        root.style.display = 'flex';
+    }
+
+    getActiveSlide(){
+        return this.currentSlide;
     }
 }
 
