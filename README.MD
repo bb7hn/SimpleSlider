@@ -19,7 +19,9 @@ first install the package
 ```
 npm i simpleslider-ssjs
 ```
-then go to index.html and browse example
+then go to index.html and browse example.
+
+As an alternative you can `browse` [**React Example**](https://github.com/bb7hn/simpleSliderReactExample)
 
 # Events
 ### ***on:***
