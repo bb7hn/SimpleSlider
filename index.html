@@ -12,19 +12,28 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            width: 100vw;
+            min-height: 100vh;
         }
         #slider{
-            width: 600px;
+            max-width: 90vw;
+            min-width: 300px;
             overflow: hidden;
-            height: 600px;
+            max-height: 90vw;
+            min-height: 300px;
             display: flex;
             position: relative;
             border: 1px solid gray;
             border-radius: 12px;
+            box-sizing: border-box;
         }
         #slider img{
             object-fit: scale-down;
-            width: 600px;
+            
+            height: 100%;
         }
     </style>
 </head>
@@ -50,7 +59,7 @@
         const options ={
             container: document.getElementById('slider'),
             imgList,
-            autoPlay:false,
+            autoPlay:true,
             autoPlayDuration:4000,
         }
         const slider = simpleSlider.init(options);

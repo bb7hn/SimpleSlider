@@ -13,6 +13,7 @@ class simpleSlider {
     constructor(){
         this.dragStartX = 0;
         this.touches = [];
+        this.resizeTimeout = null;
     }
     
     init(opts) {
@@ -55,6 +56,11 @@ class simpleSlider {
         this.root.addEventListener('touchleave', this.touchLeaveHandler);
         this.root.addEventListener('touchcancel', this.touchCancelHandler);
 
+        /* window.addEventListener('resize', (e) => {
+            clearTimeout(this.resizeTimeout);
+            this.resizeTimeout = setTimeout(()=>this.resizeHandler(e,this.root), 100);      
+        }); */
+
         this.root.simpleSlider = this;
         return this;
     }
@@ -69,9 +75,12 @@ class simpleSlider {
         urlList.forEach((url, i) => {
             const imgContainer = document.createElement('div');
             imgContainer.style.transition = "all 400ms";
-            imgContainer.style.width = "100%";
+            imgContainer.style.minWidth = "100%";
             imgContainer.style.display = "flex";
             imgContainer.style.position = "relative";
+            imgContainer.style.alignItems = "center";
+            imgContainer.style.justifyContent = "center";
+            imgContainer.style.overflow = "hidden";
             const img = document.createElement('img');
             img.src = url;
             img.draggable = false;
@@ -273,6 +282,15 @@ class simpleSlider {
             simpleSlider.goToSlide('>');
         }
     }
+
+    /* resizeHandler(e,simpleSlider){
+        const newWidth = simpleSlider.getBoundingClientRect().width;
+        console.log(newWidth);
+        const slides = this.root.querySelectorAll('div:not([data-type="control"])');
+        slides.forEach((slide)=>{
+            slide.style.minWidth = `${newWidth}px`
+        });
+    } */
 }
 
 export default new simpleSlider;
