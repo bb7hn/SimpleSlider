@@ -1,8 +1,9 @@
 {
-  "name": "simpleslider",
-  "version": "0.0.1",
+  "name": "bb7hn-simple-slider",
+  "version": "0.0.3",
   "description": "Basic Vanilla JS carousel",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
