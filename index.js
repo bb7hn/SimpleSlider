@@ -38,10 +38,10 @@ class simpleSlider {
             console.error('SimpleSliderJS : "root" option is needed and have to be html element');
         }
         // Get image list from options
-        const { imgList } = options;
+        const { imgList, itemList } = options;
         // Check imgList if it's length === 0 or it's type is not array throw error 
-        if (typeof imgList !== typeof [] || imgList.length === 0) {
-            console.error('SimpleSliderJS : "imgList" option does not contain any url (need to be array of strings)');
+        if ((typeof imgList !== typeof [] || imgList.length === 0) && (typeof itemList !== typeof [] || itemList.length === 0 || typeof itemList[0] !== typeof document.createElement('div'))) {
+            console.error('SimpleSliderJS : "imgList" option does not contain any url (need to be array of strings). Also itemList option does not contain any element (need to be array of elements)');
             return;
         }
         // TODO check item types of array accept only if they are strings or html elements
@@ -56,9 +56,9 @@ class simpleSlider {
             this.createCustomControls();
         }
 
-        this.slideCount = imgList.length;
+        this.slideCount = imgList.length || itemList.length;
 
-        this.createImages(imgList);
+        this.createImages(imgList,itemList);
 
         this.setActiveNavItem();
         // check did user set autoplay
@@ -90,7 +90,8 @@ class simpleSlider {
         this.currentSlide = 0;
     }
 
-    createImages(urlList) {
+    createImages(urlList,_itemList) {
+        if(!urlList || ! urlList.length) return this.appendItemsToList(_itemList);
         this.slides.forEach(e=>e.remove());
         urlList.forEach((url, i) => {
             const imgContainer = document.createElement('div');
@@ -105,6 +106,24 @@ class simpleSlider {
             img.src = url;
             img.draggable = false;
             imgContainer.append(img);
+            this.root.append(imgContainer);
+        });
+        this.slides = Array.from(this.root.querySelectorAll('div:not([data-type="control"])'));
+    }
+
+    appendItemsToList(itemList){
+        this.slides.forEach(e=>e.remove());
+        itemList.forEach((item, i) => {
+            const imgContainer = document.createElement('div');
+            imgContainer.style.transition = "all 400ms";
+            imgContainer.style.minWidth = "100%";
+            imgContainer.style.display = "flex";
+            imgContainer.style.position = "relative";
+            imgContainer.style.alignItems = "center";
+            imgContainer.style.justifyContent = "center";
+            imgContainer.style.overflow = "hidden";
+            item.draggable = false;
+            imgContainer.append(item);
             this.root.append(imgContainer);
         });
         this.slides = Array.from(this.root.querySelectorAll('div:not([data-type="control"])'));
