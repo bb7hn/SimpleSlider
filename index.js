@@ -34,13 +34,19 @@ class simpleSlider {
         // Set options of class
         this.setOptions(options);
         // Check did root element set by user
-        if (typeof options.container === null) {
-            console.error('SimpleSliderJS : "root" option is needed and have to be html element');
+        if (typeof options.container === typeof undefined || options.container === null) {
+            console.log(options.container,typeof null);
+            console.error('SimpleSliderJS : "container" option is needed and have to be html element');
+            return;
         }
         // Get image list from options
         const { imgList, itemList } = options;
         // Check imgList if it's length === 0 or it's type is not array throw error 
-        if ((typeof imgList !== typeof [] || imgList.length === 0) && (typeof itemList !== typeof [] || itemList.length === 0 || typeof itemList[0] !== typeof document.createElement('div'))) {
+        if (
+            (typeof imgList !== typeof [] || imgList.length === 0) && 
+            (typeof itemList !== typeof [] || itemList.length === 0 || typeof itemList[0] !== typeof document.createElement('div')) &&
+            options.container.childElementCount === 0
+        ) {
             console.error('SimpleSliderJS : "imgList" option does not contain any url (need to be array of strings). Also itemList option does not contain any element (need to be array of elements)');
             return;
         }
@@ -56,10 +62,12 @@ class simpleSlider {
             this.createCustomControls();
         }
 
-        this.slideCount = imgList.length || itemList.length;
+        
 
         this.createImages(imgList,itemList);
-
+        
+        this.slideCount = this.slides.length;
+        
         this.setActiveNavItem();
         // check did user set autoplay
         this.autoPlay();
@@ -91,7 +99,7 @@ class simpleSlider {
     }
 
     createImages(urlList,_itemList) {
-        if(!urlList || ! urlList.length) return this.appendItemsToList(_itemList);
+        if(!urlList || urlList.length === 0) return this.appendItemsToList(_itemList);
         this.slides.forEach(e=>e.remove());
         urlList.forEach((url, i) => {
             const imgContainer = document.createElement('div');
@@ -112,6 +120,7 @@ class simpleSlider {
     }
 
     appendItemsToList(itemList){
+        if(!itemList || itemList.length === 0) return this.useRootSChilds();
         this.slides.forEach(e=>e.remove());
         itemList.forEach((item, i) => {
             const imgContainer = document.createElement('div');
@@ -122,10 +131,39 @@ class simpleSlider {
             imgContainer.style.alignItems = "center";
             imgContainer.style.justifyContent = "center";
             imgContainer.style.overflow = "hidden";
-            item.draggable = false;
+            try {
+                item.draggable = false;
+            } catch (error) {
+                
+            }
             imgContainer.append(item);
             this.root.append(imgContainer);
         });
+        this.slides = Array.from(this.root.querySelectorAll('div:not([data-type="control"])'));
+    }
+
+    useRootSChilds(){
+        /* this.root.forEach(e=>e.remove()); */
+        Array.from(this.root.children).forEach((child)=>{
+            if(child.getAttribute('data-type') !== "control"){
+                const imgContainer = document.createElement('div');
+                imgContainer.style.transition = "all 400ms";
+                imgContainer.style.minWidth = "100%";
+                imgContainer.style.display = "flex";
+                imgContainer.style.position = "relative";
+                imgContainer.style.alignItems = "center";
+                imgContainer.style.justifyContent = "center";
+                imgContainer.style.overflow = "hidden";
+                try {
+                    child.draggable = false;
+                } catch (error) {
+                    
+                }
+                imgContainer.append(child);
+                this.root.append(imgContainer);
+            }
+        });
+        
         this.slides = Array.from(this.root.querySelectorAll('div:not([data-type="control"])'));
     }
 

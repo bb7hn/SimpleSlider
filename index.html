@@ -74,7 +74,7 @@
         for(let i = 0; i<2;i++){
             const dummyImage = document.createElement('img');
             dummyImage.src = 'https://images.unsplash.com/photo-1615864691387-6e986695017a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1528&q=80';
-            itemList.push(dummyImage);
+            document.getElementById('slider').append(dummyImage);
         };
         console.log(itemList);
         const navigation = document.getElementById('navigation');
@@ -83,7 +83,7 @@
         activeSlide.innerHTML = "1";
 
         const totalSlides = document.createElement('span');
-        totalSlides.innerHTML = ` / ${itemList.length}`;
+        totalSlides.innerHTML = ` / ${2}`;
 
         navigation.append(activeSlide,totalSlides);
 
@@ -106,7 +106,7 @@
         }
         const slider = simpleSlider.init(options);
         console.log(slider);
-        slider.on('changed',(e)=>{
+        slider?.on('changed',(e)=>{
             activeSlide.innerHTML = e+1;
         })
     </script>
