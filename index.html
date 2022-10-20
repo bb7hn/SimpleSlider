@@ -72,11 +72,12 @@
         ]; */
         const itemList = [];
         for(let i = 0; i<2;i++){
+            const a = document.createElement('a');
             const dummyImage = document.createElement('img');
             dummyImage.src = 'https://images.unsplash.com/photo-1615864691387-6e986695017a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1528&q=80';
-            document.getElementById('slider').append(dummyImage);
+            a.append(dummyImage);
+            document.getElementById('slider').append(a);
         };
-        console.log(itemList);
         const navigation = document.getElementById('navigation');
         
         const activeSlide = document.createElement('span');
