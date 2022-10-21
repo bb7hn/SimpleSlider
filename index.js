@@ -37,7 +37,6 @@ const defaultProps = {
       this.setOptions(options);
       // Check did root element set by user
       if (typeof options.container === typeof undefined || options.container === null) {
-        console.log(options.container, typeof null);
         console.error('SimpleSliderJS : "container" option is needed and have to be html element');
         return;
       }
@@ -150,7 +149,6 @@ const defaultProps = {
       const slides = [];
       Array.from(this.root.children).forEach((child) => {
         if (child.getAttribute('data-type') !== 'control') {
-          console.log(child);
           const imgContainer = document.createElement('div');
           imgContainer.style.transition = 'all 400ms';
           imgContainer.style.minWidth = '100%';
