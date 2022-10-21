@@ -23,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/bb7hn/SimpleSlider/issues"
   },
-  "homepage": "https://github.com/bb7hn/SimpleSlider#readme",
+  "homepage": "https://github.com/bb7hn/SimpleSlider",
   "devDependencies": {
     "uglify-js": "^3.17.3"
   }
