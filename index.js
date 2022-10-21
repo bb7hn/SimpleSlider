@@ -265,7 +265,7 @@ const defaultProps = {
           this.setActiveSlide(-1);
         } else {
           this.currentSlide = this.slideCount;
-          this.goToSlide('<');
+          this.goToSlide('<',event);
         }
       } else if (index === '>') {
         // go to next
@@ -274,12 +274,12 @@ const defaultProps = {
           this.setActiveSlide();
         } else {
           this.currentSlide = -1;
-          this.goToSlide('>');
+          this.goToSlide('>',event);
         }
       } else {
         // parseint index and go to index
         this.currentSlide = parseInt(index);
-        this.setActiveSlide(0);
+        this.setActiveSlide(0,event === "useClick");
       }
       if (event === 'userClick') {
         this.autoPlay();
@@ -295,7 +295,7 @@ const defaultProps = {
       }
     }
   
-    setActiveSlide(multiplier = 1) {
+    setActiveSlide(multiplier = 1, triggerCB=false) {
       const oldIDX = this.currentSlide;
       const { slides } = this;
       const slideWidth = slides[0].getBoundingClientRect().width;
@@ -305,7 +305,7 @@ const defaultProps = {
       });
   
       this.currentSlide += multiplier;
-      if (this.currentSlide !== oldIDX) {
+      if (this.currentSlide !== oldIDX || triggerCB) {
         this.changedCB(this.currentSlide);
       }
       this.setActiveNavItem();
