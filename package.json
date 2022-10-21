@@ -1,11 +1,12 @@
 {
   "name": "simpleslider-ssjs",
-  "version": "0.0.9",
+  "version": "0.1.1",
   "description": "Basic Vanilla JS carousel",
-  "main": "index.js",
+  "main": "./dist/SimpleSlider.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "uglifyjs ./index.js --module --compress --mangle -o ./dist/SimpleSlider.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/bb7hn/SimpleSlider/issues"
   },
-  "homepage": "https://github.com/bb7hn/SimpleSlider#readme"
+  "homepage": "https://github.com/bb7hn/SimpleSlider#readme",
+  "devDependencies": {
+    "uglify-js": "^3.17.3"
+  }
 }

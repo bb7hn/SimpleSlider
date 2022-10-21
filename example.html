@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Slider Example</title>
+    <style>
+        html,body{
+            width: 100vw;
+            min-height: 100vh;
+            background-color: #2f2f2f;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #simpleSlider img{
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="simpleSlider"></div>
+    
+    <script type="module">
+        import { simpleSlider } from './index.js';
+        
+        const container = document.getElementById('simpleSlider');
+        
+        for(let i = 1; i<8; i+=1){
+            const img = document.createElement('img');
+            img.src = `./img/${i}.jpg`;
+            img.alt = `alt ${i}`;
+            container.append(img);
+        }
+
+        const options ={
+            container: container,
+            slidePerPage:2,
+            gap:'1rem',
+            autoPlay:true,
+            style: {
+                alignItems:"center",
+                justifyContent:"space-between"
+            }
+        }
+
+        const SimpleSlider = simpleSlider.init(options);
+
+        SimpleSlider.on('changed', (index) => {
+            console.log('active slide index is', index);
+        })
+    </script>
+</body>
+</html>
