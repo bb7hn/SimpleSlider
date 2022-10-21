@@ -1,5 +1,5 @@
 # Simple Slider
-## [Demo](https://bb7hn.github.io/SimpleSlider/)
+## [Demo](https://bb7hn.github.io/SimpleSlider/example.html)
 ## Overview
 ![npm bundle size](https://img.shields.io/bundlephobia/min/simpleslider-ssjs?style=plastic&label=Minified%20Size:)
 
