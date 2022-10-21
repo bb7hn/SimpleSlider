@@ -279,7 +279,7 @@ const defaultProps = {
       } else {
         // parseint index and go to index
         this.currentSlide = parseInt(index);
-        this.setActiveSlide(0,event === "useClick");
+        this.setActiveSlide(0,event === "userClick");
       }
       if (event === 'userClick') {
         this.autoPlay();
