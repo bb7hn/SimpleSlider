@@ -322,15 +322,6 @@ class simpleSlider {
     }
   }
 
-  setActiveNavItem() {
-    if (this.navigation && !!this.options.noControl) {
-      Array.from(this.navigation).forEach((item) => {
-        item.style.background = '#FFFFFF50';
-      });
-      this.navigation[this.currentSlide].style.background = '#FFFFFF90';
-    }
-  }
-
   setActiveSlide(multiplier = 1, triggerCB = false) {
     const oldIDX = this.currentSlide;
     const { slides } = this;
@@ -351,7 +342,6 @@ class simpleSlider {
     if (this.currentSlide !== oldIDX || triggerCB) {
       this.changedCB(this.currentSlide);
     }
-    this.setActiveNavItem();
   }
 
   on(type, callBack) {
