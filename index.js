@@ -94,7 +94,7 @@ class simpleSlider {
       this.resizeTimeout = setTimeout(() => {
         this.setActiveSlide(0);
         this.root.style.opacity = 1;
-      }, 80);
+      }, 1);
     });
 
     this.root.simpleSlider = this;
