@@ -6,7 +6,6 @@ const defaultProps = {
   controls: {
     next: false,
     prev: false,
-    navigation: false,
   },
   autoPlay: true,
   style: {
@@ -247,40 +246,12 @@ class simpleSlider {
     nextButton.style.userSelect = 'none';
     nextButton.onclick = () => this.goToSlide('>');
 
-    const bottomNavigation = document.createElement('div');
-    bottomNavigation.setAttribute('data-type', 'control');
-    bottomNavigation.style.zIndex = '2';
-    bottomNavigation.style.padding = '10px';
-    bottomNavigation.style.display = 'flex';
-    bottomNavigation.style.alignItems = 'center';
-    bottomNavigation.style.justifyContent = 'space-between';
-    bottomNavigation.style.position = 'absolute';
-    bottomNavigation.style.left = '50%';
-    bottomNavigation.style.bottom = '0';
-    bottomNavigation.style.transform = 'translateX(-50%)';
-    bottomNavigation.style.userSelect = 'none';
-    this.options.imgList.forEach((_, index) => {
-      const circle = document.createElement('span');
-      circle.style.width = '20px';
-      circle.style.height = '20px';
-      circle.style.margin = '5px';
-      circle.style.borderRadius = '100%';
-      circle.style.background = '#FFFFFF50';
-      circle.style.cursor = 'pointer';
-      circle.onclick = () => {
-        this.goToSlide(index);
-      };
-      bottomNavigation.appendChild(circle);
-    });
-
-    this.navigation = bottomNavigation.children;
-
-    this.root.append(previousButton, nextButton, bottomNavigation);
+    this.root.append(previousButton, nextButton);
   }
   // if user send custom controls in options use this function
   createCustomControls() {
     const {
-      controls: { next, prev, navigation },
+      controls: { next, prev },
     } = this.options;
     prev.setAttribute('data-type', 'control');
     prev.onclick = () => this.goToSlide('<');
@@ -288,8 +259,7 @@ class simpleSlider {
     next.setAttribute('data-type', 'control');
     next.onclick = () => this.goToSlide('>');
 
-    navigation.setAttribute('data-type', 'control');
-    this.root.append(prev, next, navigation);
+    this.root.append(prev, next);
   }
 
   goToSlide(index, event = 'userClick') {
