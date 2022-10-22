@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Slider</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js"></script>
+</head>
+
+<body>
+    <h1 id="simple-slider">Simple Slider</h1>
+    <h2 id="demo"><a href="https://bb7hn.github.io/SimpleSlider/example.html">Demo</a></h2>
+    <h2 id="overview">Overview</h2>
+    <p><img src="https://img.shields.io/bundlephobia/min/simpleslider-ssjs?style=plastic&label=Minified%20Size:"
+            alt="npm bundle size"></p>
+    <p><img src="https://img.shields.io/npm/l/simpleslider-ssjs?style=plastic&label=License:" alt="NPM"></p>
+    <p><img src="https://img.shields.io/github/commit-activity/m/bb7hn/SimpleSlider?label=Total%20Commits:"
+            alt="GitHub commit activity"></p>
+    <p><img src="https://img.shields.io/github/downloads/bb7hn/simpleSlider/total?style=plastic&color=lightgreen&label=Total%20Downloads%20(GitHub):"
+            alt="GitHub all releases"></p>
+    <p><img src="https://img.shields.io/npm/dw/simpleslider-ssjs?style=plastic&color=lightgreen&label=Total%20Downloads%20(npm)"
+            alt="npm"></p>
+    <h2 id="what-is-simple-slider">What is Simple Slider</h2>
+    <ul>
+        <li>Simple Slider is a basic Vanilla JS carousel<h2 id="quick-start">Quick Start</h2>
+        </li>
+    </ul>
+    <p>First install the package</p>
+    <pre><code>npm i simpleslider-ssjs
+</code></pre>
+    <p>Then go to example.html and browse example.</p>
+    <p>As an alternative you can <code>browse</code> <a
+            href="https://github.com/bb7hn/simpleSliderReactExample"><strong>React Example</strong></a></p>
+    <h2 id="getting-started">Getting started</h2>
+<pre>
+    <code id="htmlViewer" style="color:rgb(171, 178, 191); font-weight:400;background-color:rgb(40, 44, 52);background:rgb(40, 44, 52);display:block;padding: .5em;">
+        <span style="color:rgb(171, 178, 191); font-weight:400;">&lt;<span style="color:rgb(224, 108, 117); font-weight:400;">html</span>&gt;</span>
+            <span style="color:rgb(171, 178, 191); font-weight:400;">&lt;<span style="color:rgb(224, 108, 117); font-weight:400;">head</span>&gt;</span>
+            <span style="color:rgb(171, 178, 191); font-weight:400;">&lt;/<span style="color:rgb(224, 108, 117); font-weight:400;">head</span>&gt;</span>
+            <span style="color:rgb(171, 178, 191); font-weight:400;">&lt;<span style="color:rgb(224, 108, 117); font-weight:400;">body</span>&gt;</span>
+                <span style="color:rgb(171, 178, 191); font-weight:400;">&lt;<span style="color:rgb(224, 108, 117); font-weight:400;">div</span> <span style="color:rgb(209, 154, 102); font-weight:400;">id</span>=<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;mySlider&quot;</span>&gt;</span>
+                    place your elements here..
+                <span style="color:rgb(171, 178, 191); font-weight:400;">&lt;/<span style="color:rgb(224, 108, 117); font-weight:400;">div</span>&gt;</span>
+                <span style="color:rgb(171, 178, 191); font-weight:400;">&lt;<span style="color:rgb(224, 108, 117); font-weight:400;">script</span> <span style="color:rgb(209, 154, 102); font-weight:400;">type</span>=<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;module&quot;</span>&gt;</span><span style="color:rgb(171, 178, 191); font-weight:400;">
+                    <span style="color:rgb(198, 120, 221); font-weight:400;">import</span> { simpleSlider } <span style="color:rgb(198, 120, 221); font-weight:400;">from</span> <span style="color:rgb(152, 195, 121); font-weight:400;">&#x27;simpleslider-ssjs&#x27;</span>;
+                    <span style="color:rgb(198, 120, 221); font-weight:400;">const</span> options = {
+                        ... specialize the options or you can prefer to use defaults
+                        .. you can see the all options on  #Parameters section
+                    }
+
+                    <span style="color:rgb(198, 120, 221); font-weight:400;">const</span> SimpleSlider = simpleSlider.init(options);
+                </span><span style="color:rgb(171, 178, 191); font-weight:400;">&lt;/<span style="color:rgb(224, 108, 117); font-weight:400;">script</span>&gt;</span>
+            <span style="color:rgb(171, 178, 191); font-weight:400;">&lt;/<span style="color:rgb(224, 108, 117); font-weight:400;">body</span>&gt;</span>
+        <span style="color:rgb(171, 178, 191); font-weight:400;">&lt;/<span style="color:rgb(224, 108, 117); font-weight:400;">html</span>&gt;</span>
+    </code>
+</pre>
+    <p>That&#39;s all. Now you can manipulate simpleSlider by using your SimleSlider constant.</p>
+    <h1 id="events">Events</h1>
+    <h3 id="on"><em><strong>on:</strong></em></h3>
+<pre>
+    <code id="htmlViewer" style="color:rgb(171, 178, 191); font-weight:400;background-color:rgb(40, 44, 52);background:rgb(40, 44, 52);display:block;padding: .5em;">
+        const handler = <span style="color:rgb(171, 178, 191); font-weight:400;"><span style="color:rgb(171, 178, 191); font-weight:400;">(index)</span> =&gt;</span> { 
+            <span style="color:rgb(230, 192, 123); font-weight:400;">console</span>.log(<span style="color:rgb(152, 195, 121); font-weight:400;">&#x27;active slide is:&#x27;</span>, index+<span style="color:rgb(209, 154, 102); font-weight:400;">1</span>); 
+        }
+
+        slider.<span style="color:rgb(86, 182, 194); font-weight:400;">on</span>(<span style="color:rgb(152, 195, 121); font-weight:400;">&#x27;changed&#x27;</span>, handler);
+    </code>
+</pre>
+    <ul>
+        <li>When slide changes, the carousel will trigger the <em>handler function</em>. This event could be usefull
+            when you want to know which slide is seen by user or want to manipulate the DOM.</li>
+    </ul>
+    <p><code>IMPORTANT NOTE: If you set more than 1 slide per page in options this event will return only the first slide&#39;s index which seen by user</code>
+    </p>
+    <h1 id="methods">Methods</h1>
+    <h3 id="init">init:</h3>
+    <p>this is the most basic method to initialize your container element</p>
+    <pre>
+        <code id="htmlViewer" style="color:rgb(171, 178, 191); font-weight:400;background-color:rgb(40, 44, 52);background:rgb(40, 44, 52);display:block;padding: .5em;">   <span style="color:rgb(198, 120, 221); font-weight:400;">import</span> { simpleSlider } <span style="color:rgb(198, 120, 221); font-weight:400;">from</span> <span style="color:rgb(152, 195, 121); font-weight:400;">&#x27;simpleslider-ssjs&#x27;</span>;
+            simpleSlider.init(options)
+        </code>
+    </pre>
+    <h3 id="gotoslide"><em><strong>goToSlide:</strong></em></h3>
+    <pre>
+        <code id="htmlViewer" style="color:rgb(171, 178, 191); font-weight:400;background-color:rgb(40, 44, 52);background:rgb(40, 44, 52);display:block;padding: .5em;">    <span style="color:rgb(198, 120, 221); font-weight:400;">import</span> { simpleSlider } <span style="color:rgb(198, 120, 221); font-weight:400;">from</span> <span style="color:rgb(152, 195, 121); font-weight:400;">&#x27;simpleslider-ssjs&#x27;</span>;
+       
+           ...initial code blocks
+       
+           const nextButtonHandler = <span style="color:rgb(171, 178, 191); font-weight:400;"><span style="color:rgb(171, 178, 191); font-weight:400;">()</span> =&gt;</span> { 
+               slider.goToSlide(<span style="color:rgb(152, 195, 121); font-weight:400;">&#x27;&gt;&#x27;</span>);
+           }
+       
+           const previousButtonHandler = <span style="color:rgb(171, 178, 191); font-weight:400;"><span style="color:rgb(171, 178, 191); font-weight:400;">()</span> =&gt;</span> { 
+               slider.goToSlide(<span style="color:rgb(152, 195, 121); font-weight:400;">&#x27;&lt;&#x27;</span>);
+           }
+           
+           const navigationButtonHandler = <span style="color:rgb(171, 178, 191); font-weight:400;"><span style="color:rgb(171, 178, 191); font-weight:400;">(index)</span> =&gt;</span> { 
+               slider.goToSlide(index);
+           }
+        </code>
+    </pre>
+    <ul>
+        <li>if you want to manipulate slider from other elements click events etc. this event could be usefull. This
+            event accepts <code>integer</code> and <code>&gt;</code> <code>&lt;</code> strings as a parameter. If you
+            prefer to set true noControl option you can handle next prev and navigation buttons by this method.
+            <code>&lt;</code> means <em><strong><code>previous</code></strong></em> slide and <code>&gt;</code> means
+            <em><strong><code>next</code></strong></em> slide.
+        </li>
+    </ul>
+    <h3 id="getactiveslide"><em><strong>getActiveSlide:</strong></em></h3>
+    <pre>
+    <code id="htmlViewer" style="color:rgb(171, 178, 191); font-weight:400;background-color:rgb(40, 44, 52);background:rgb(40, 44, 52);display:block;padding: .5em;">
+        ... <span style="color:rgb(198, 120, 221); font-weight:400;">initial</span> code blocks
+
+        console.<span style="color:rgb(230, 192, 123); font-weight:400;">log</span>(slider.getActiveSlide());
+    </code>
+</pre>
+    <ul>
+        <li>You can get active index with this event<h1 id="parameters-options">Parameters (options)</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th align="center"><strong><em>Option</em></strong></th>
+                        <th align="center"><strong><em>Type</em></strong></th>
+                        <th align="center"><strong><em>Is Parent</em></strong></th>
+                        <th align="center"><strong><em>Default</em></strong></th>
+                        <th align="center"><strong><em>Is Needed</em></strong></th>
+                        <th align="center"><strong><em>Description</em></strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align="center">container</td>
+                        <td align="center">HTML ELEMENT</td>
+                        <td align="center">✓</td>
+                        <td align="center">null</td>
+                        <td align="center">Yes</td>
+                        <td align="center">This parameter need to be supplied for initialization. This must to be your
+                            main slider container</td>
+                    </tr>
+                    <tr>
+                        <td align="center">imgList</td>
+                        <td align="center">Array of strings</td>
+                        <td align="center">✓</td>
+                        <td align="center">[]</td>
+                        <td align="center">Only if there is no child element in container or didn&#39;t supplied
+                            itemList</td>
+                        <td align="center">Img url list</td>
+                    </tr>
+                    <tr>
+                        <td align="center">itemList</td>
+                        <td align="center">Array of HTML ELEMENTS</td>
+                        <td align="center">✓</td>
+                        <td align="center">undefined</td>
+                        <td align="center">Only if there is no child element in container or didn&#39;t supplied imgList
+                        </td>
+                        <td align="center">Html elements array</td>
+                    </tr>
+                    <tr>
+                        <td align="center">createCustomControls</td>
+                        <td align="center">Boolean</td>
+                        <td align="center">✓</td>
+                        <td align="center">undefined</td>
+                        <td align="center">No</td>
+                        <td align="center"><strong>This is experimental till getting improved not to use is
+                                better</strong></td>
+                    </tr>
+                    <tr>
+                        <td align="center">noControl</td>
+                        <td align="center">Boolean</td>
+                        <td align="center">✓</td>
+                        <td align="center">undefined</td>
+                        <td align="center">No</td>
+                        <td align="center"><strong>For creating yout custom next prev buttons etc. set this to
+                                true</strong></td>
+                    </tr>
+                    <tr>
+                        <td align="center">controls</td>
+                        <td align="center">Object</td>
+                        <td align="center">✓</td>
+                        <td align="center">{ next: false, prev: false, navigation: false, }</td>
+                        <td align="center">Only needed if createCustomControls is true</td>
+                        <td align="center">This is connected with <strong>createCustomControls</strong> so same with it
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">next</td>
+                        <td align="center">HTML ELEMENT</td>
+                        <td align="center">Child of controls</td>
+                        <td align="center">false</td>
+                        <td align="center">Only needed if createCustomControls is true</td>
+                        <td align="center">--</td>
+                    </tr>
+                    <tr>
+                        <td align="center">prev</td>
+                        <td align="center">HTML ELEMENT</td>
+                        <td align="center">Child of controls</td>
+                        <td align="center">false</td>
+                        <td align="center">Only needed if createCustomControls is true</td>
+                        <td align="center">--</td>
+                    </tr>
+                    <tr>
+                        <td align="center">navigation</td>
+                        <td align="center">HTML ELEMENT</td>
+                        <td align="center">Child of controls</td>
+                        <td align="center">false</td>
+                        <td align="center">Only needed if createCustomControls is true</td>
+                        <td align="center">--</td>
+                    </tr>
+                    <tr>
+                        <td align="center">autoPlay</td>
+                        <td align="center">Boolean</td>
+                        <td align="center">✓</td>
+                        <td align="center">true</td>
+                        <td align="center">No</td>
+                        <td align="center"><strong>If don&#39;t you set it false slides will change in every 4
+                                seconds.</strong></td>
+                    </tr>
+                    <tr>
+                        <td align="center">style</td>
+                        <td align="center">Object</td>
+                        <td align="center">✓</td>
+                        <td align="center">{ boxSizing: &#39;border-box&#39;, border: &#39;1px solid gray&#39;,
+                            borderRadius: &#39;12px&#39;, }</td>
+                        <td align="center">No</td>
+                        <td align="center"><strong>This option created for flexibility. You can set every key about css
+                                styles and all of them will applied to container element dynamically. For example width
+                                height marginTop borderRadius... There are only two things you can not set with this
+                                option. 1.) display (flex as default) and 2.) overflow hidden as default</strong></td>
+                    </tr>
+                    <tr>
+                        <td align="center">slidePerPage</td>
+                        <td align="center">Number</td>
+                        <td align="center">✓</td>
+                        <td align="center">1</td>
+                        <td align="center">No</td>
+                        <td align="center">How many slides do you want to show to user ?</td>
+                    </tr>
+                    <tr>
+                        <td align="center">gap</td>
+                        <td align="center">String or Number</td>
+                        <td align="center">✓</td>
+                        <td align="center">0</td>
+                        <td align="center">No</td>
+                        <td align="center">This is the gap between each slide. This will get applied if slidePerPage
+                            option is bigger than 1. You can set it as integer or &#39;1rem&#39; || 12 ||
+                            &quot;15px&quot;. <em><strong>only px and rem supportted. If it is number then it&#39;ll
+                                    agreed as px</strong></em></td>
+                    </tr>
+                </tbody>
+            </table>
+        </li>
+    </ul>
+</body>
+
+</html>
