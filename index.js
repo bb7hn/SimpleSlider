@@ -1,5 +1,3 @@
-"use strict"
-
 const defaultProps = {
   container: null,
   imgList: [],
@@ -13,13 +11,11 @@ const defaultProps = {
     border: '1px solid gray',
     borderRadius: '12px',
   },
-  gap:0,
-  slidePerPage:1
+  gap: 0,
+  slidePerPage: 1,
 };
 
-const convertRemToPixels = (rem) => {    
-  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-}
+const convertRemToPixels = (rem) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 class simpleSlider {
   constructor() {
     this.dragStartX = 0;
@@ -37,7 +33,7 @@ class simpleSlider {
       controls: { ...defaultProps.controls, ...opts.controls },
       style: { ...defaultProps.style, ...opts.style, display: 'flex', overflow: 'hidden' },
     };
-    
+
     // Set options of class
     this.setOptions(options);
     // Check did root element set by user
@@ -109,7 +105,7 @@ class simpleSlider {
   createImages(urlList, _itemList) {
     if (!urlList || urlList.length === 0) return this.appendItemsToList(_itemList);
     this.slides.forEach((e) => e.remove());
-    const perPage = sthis.options.slidePerPage;
+    const perPage = this.options.slidePerPage;
     urlList.forEach((url, i) => {
       const imgContainer = document.createElement('div');
       imgContainer.style.transition = 'all 400ms';
@@ -135,11 +131,11 @@ class simpleSlider {
   appendItemsToList(itemList) {
     if (!itemList || itemList.length === 0) return this.useRootSChilds();
     this.slides.forEach((e) => e.remove());
-    const perPage = sthis.options.slidePerPage;
+    const perPage = this.options.slidePerPage;
     let gap = 0;
-    if(typeof this.options.gap === typeof ''){
-      gap = this.options.gap.includes('rem') ? convertRemToPixels(parseFloat(this.options.gap)):0
-    } else if(typeof this.options.gap === typeof 1) {
+    if (typeof this.options.gap === typeof '') {
+      gap = this.options.gap.includes('rem') ? convertRemToPixels(parseFloat(this.options.gap)) : 0;
+    } else if (typeof this.options.gap === typeof 1) {
       gap = this.options.gap;
     }
     itemList.forEach((item, i) => {
@@ -172,38 +168,37 @@ class simpleSlider {
     const perPage = this.options.slidePerPage;
 
     let gap = 0;
-    if(typeof this.options.gap === typeof '' && perPage !== 1){
-      gap = this.options.gap.includes('rem') ? convertRemToPixels(parseFloat(this.options.gap)):0
-    } else if(typeof this.options.gap === typeof 1 && perPage !== 1) {
+    if (typeof this.options.gap === typeof '' && perPage !== 1) {
+      gap = this.options.gap.includes('rem') ? convertRemToPixels(parseFloat(this.options.gap)) : 0;
+    } else if (typeof this.options.gap === typeof 1 && perPage !== 1) {
       gap = this.options.gap;
     }
-    console.log(this)
-    let i = 0;
-    const childs = Array.from(this.root.children).filter(child => child.getAttribute('data-type') !== 'control');
-    childs.forEach((child,idx) => {
-        const imgContainer = document.createElement('div');
-        imgContainer.style.transition = 'all 400ms';
-        imgContainer.style.minWidth = `calc(${100 / perPage}% - ${gap * 2}px)`;
-        imgContainer.style.margin = `0 ${gap*2}px 0 0`;
-        imgContainer.style.width = '100%'
-        imgContainer.style.display = 'flex';
-        imgContainer.style.position = 'relative';
-        imgContainer.style.alignItems = 'center';
-        imgContainer.style.justifyContent = 'center';
-        imgContainer.style.overflow = 'hidden';
-        try {
-          child.draggable = false;
-        } catch (error) {
-          //
-        }
-        imgContainer.append(child);
-        slides.push(imgContainer);
-        this.root.append(imgContainer);
+    const childs = Array.from(this.root.children).filter((child) => child.getAttribute('data-type') !== 'control');
+    childs.forEach((child) => {
+      const imgContainer = document.createElement('div');
+      imgContainer.style.transition = 'all 400ms';
+      imgContainer.style.minWidth = `calc(${100 / perPage}% - ${gap * 2}px)`;
+      imgContainer.style.margin = `0 ${gap * 2}px 0 0`;
+      imgContainer.style.width = '100%';
+      imgContainer.style.display = 'flex';
+      imgContainer.style.position = 'relative';
+      imgContainer.style.alignItems = 'center';
+      imgContainer.style.justifyContent = 'center';
+      imgContainer.style.overflow = 'hidden';
+      try {
+        child.draggable = false;
+      } catch (error) {
+        //
+      }
+      imgContainer.append(child);
+      slides.push(imgContainer);
+      this.root.append(imgContainer);
     });
 
     this.slides = slides;
-    this.root.style.paddingLeft = `${2 * gap}px`
+    this.root.style.paddingLeft = `${2 * gap}px`;
   }
+
   // if user did not send custom controls in options and did not set no controls use this function
   createControls() {
     const previousButton = document.createElement('div');
@@ -248,6 +243,7 @@ class simpleSlider {
 
     this.root.append(previousButton, nextButton);
   }
+
   // if user send custom controls in options use this function
   createCustomControls() {
     const {
@@ -268,9 +264,9 @@ class simpleSlider {
       // go to previous
       if (this.currentSlide > 0) {
         // if selected slide bigger than 0 go back else go to last one
-        this.setActiveSlide(-1 * perPage);
+        this.setActiveSlide(-1);
       } else {
-        this.currentSlide = this.slideCount;
+        this.currentSlide = this.slideCount - (perPage - 1);
         this.goToSlide('<', event);
       }
     } else if (index === '>') {
@@ -298,12 +294,12 @@ class simpleSlider {
     const slideWidth = slides[0].getBoundingClientRect().width;
     const perPage = this.options.slidePerPage;
     let gap = 0;
-    if(typeof this.options.gap === typeof '' && perPage !== 1){
-      gap = this.options.gap.includes('rem') ? convertRemToPixels(parseFloat(this.options.gap)):0
-    } else if(typeof this.options.gap === typeof 1 && perPage !== 1) {
+    if (typeof this.options.gap === typeof '' && perPage !== 1) {
+      gap = this.options.gap.includes('rem') ? convertRemToPixels(parseFloat(this.options.gap)) : 0;
+    } else if (typeof this.options.gap === typeof 1 && perPage !== 1) {
       gap = this.options.gap;
     }
-    
+
     slides.forEach((slide, idx) => {
       slide.style.transform = `translateX(-${(slideWidth + gap * 2) * (this.currentSlide + multiplier)}px)`;
     });
@@ -374,11 +370,11 @@ class simpleSlider {
     });
     root.style.position = 'relative';
     root.style.overflow = 'hidden';
-    
+
     let gap = 0;
-    if(typeof this.options.gap === typeof ''){
-      gap = this.options.gap.includes('rem') ? convertRemToPixels(parseFloat(this.options.gap)):0
-    } else if(typeof this.options.gap === typeof 1) {
+    if (typeof this.options.gap === typeof '') {
+      gap = this.options.gap.includes('rem') ? convertRemToPixels(parseFloat(this.options.gap)) : 0;
+    } else if (typeof this.options.gap === typeof 1) {
       gap = this.options.gap;
     }
     /* root.style.display = 'flex'; */
