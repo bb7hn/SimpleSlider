@@ -84,11 +84,11 @@ class simpleSlider {
     this.root.addEventListener('touchcancel', this.touchCancelHandler);
 
     window.addEventListener('resize', (e) => {
-      this.root.style.opacity = 0.1;
+      /* this.root.style.opacity = 0.1; */
       clearTimeout(this.resizeTimeout);
       this.resizeTimeout = setTimeout(() => {
         this.setActiveSlide(0);
-        this.root.style.opacity = 1;
+        /* this.root.style.opacity = 1; */
       }, 1);
     });
 
