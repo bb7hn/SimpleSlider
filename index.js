@@ -80,8 +80,10 @@ class simpleSlider {
     this.root.addEventListener('touchstart', this.touchStartHandler);
     this.root.addEventListener('touchend', this.touchEndHandler);
     this.root.addEventListener('touchmove', this.touchMoveHandler);
-    this.root.addEventListener('touchleave', this.touchLeaveHandler);
-    this.root.addEventListener('touchcancel', this.touchCancelHandler);
+    /* this.root.addEventListener('touchleave', this.touchLeaveHandler);
+    this.root.addEventListener('touchcancel', this.touchCancelHandler); */
+    this.root.addEventListener('mouseenter', this.mouseEnterHandler);
+    this.root.addEventListener('mouseleave', this.mouseLeaveHandler);
 
     window.addEventListener('resize', (e) => {
       /* this.root.style.opacity = 0.1; */
@@ -356,6 +358,16 @@ class simpleSlider {
       simpleSlider.goToSlide('>');
     }
     simpleSlider.resetTouches();
+  }
+
+  mouseEnterHandler(){
+    if (this.simpleSlider.options.autoPlay === true && this.simpleSlider.autoPlayInterval) {
+      clearInterval(this.simpleSlider.autoPlayInterval);
+    }
+  }
+
+  mouseLeaveHandler(){
+    this.simpleSlider.autoPlay();
   }
 
   resetTouches() {
